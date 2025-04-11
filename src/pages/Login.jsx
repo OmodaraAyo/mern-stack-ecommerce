@@ -2,14 +2,21 @@ import React, { useState } from "react";
 import loginIcon from "../assest/signin.gif";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import SummaryApi from "../service";
+import { Slide, toast } from "react-toastify";
+import { useContext } from "react";
+import Context from "../context";
 
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false)
     const [data, setData] = useState({
       email: "",
-      password: ""
+      password: "" 
     })
+
+    const navigate = useNavigate();
+    const { fetchUserDetails } = useContext(Context)
 
     const handleChange = (e) =>{
         const { name, value } = e.target
@@ -23,10 +30,50 @@ const Login = () => {
         })
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
       e.preventDefault()
       // call api for login with data
+
+      const dataResponse = await fetch(SummaryApi.signIn.url, {
+        method : SummaryApi.signIn.method,
+        credentials : 'include',
+        headers : SummaryApi.signIn.headers,
+        body : JSON.stringify(data)
+      })
       
+      const dataApi = await dataResponse.json()
+
+
+      if(dataApi.success){
+        toast.success(dataApi.message, {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: false,
+          progress: undefined,
+          theme: "light",
+          transition: Slide
+        })
+        navigate('/')
+        fetchUserDetails()
+      }
+      if(dataApi.error){
+        toast.error(dataApi.message, {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: false,
+          progress: undefined,
+          theme: "light",
+          transition: Slide
+        })
+
+      } 
+
     }
 
     console.log('data login', data)
@@ -77,7 +124,7 @@ const Login = () => {
                 </Link>
             </div>
 
-            <button className="bg-rose-600 hover:bg-red-700 text-white px-6 py-2 w-full max-w-[150px] rounded-full hover:scale-110 transition-all mx-auto block mt-6">Login</button>
+            <button className="bg-rose-600 hover:bg-red-700 text-white px-6 py-2 w-full max-w-[150px] rounded-full hover:scale-110 transition-all mx-auto block mt-6 cursor-pointer">Login</button>
           </form>
 
           <p className="">Don't have account ? <Link to={'/sign-up'} className="text-red-600 hover:text-red-700 hover:underline">Sign up</Link></p>

@@ -3,8 +3,10 @@ import { useState } from 'react'
 import loginIcon from "../assest/signin.gif";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import imageToBase64 from '../helpers/imageTobase64';
+import SummaryApi from "../service/index";
+import { Slide, toast } from 'react-toastify';
 
 
 const SignUp = () => {
@@ -17,6 +19,7 @@ const SignUp = () => {
             confirmPassword: "",
             profilePicture: "",
         })
+        const navigate = useNavigate();
     
         const handleChange = (e) =>{
             const { name, value } = e.target
@@ -30,25 +33,78 @@ const SignUp = () => {
             })
         }
 
+        //convert image to base64 encoded string
         const handleUploadPicture = async(e) => {
             const file = e.target.files[0]
 
             const imagePic = await imageToBase64(file)
-            console.log('imagePic', imagePic)
+            // console.log('imagePic', imagePic)
+            setData((preve)=> {
+                return{
+                    ...preve,
+                    profilePicture: imagePic,
+                }
+            })
         }
 
-        const handleSubmit = (e) => {
+        const handleSubmit = async (e) => {
           e.preventDefault()
           // call api for login with data
-          
+
+          if(data.password === data.confirmPassword){
+
+            const dataResponse = await fetch(SummaryApi.signUp.url, {
+                method : SummaryApi.signUp.method,
+                headers : SummaryApi.signUp.headers,
+                body : JSON.stringify(data),
+              })
+    
+              const apiResponse = await dataResponse.json()
+            //   console.log('data', apiResponse) 
+
+            if(apiResponse.success === true){
+                toast.success(apiResponse.message, {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: false,
+                    progress: undefined,
+                    theme: "light",
+                    transition: Slide
+                })
+                navigate('/login')
+            }
+            if(apiResponse.error){
+                toast.error(apiResponse.message,{
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: false,
+                    progress: undefined,
+                    theme: "light",
+                    transition: Slide
+                })
+            }
+
+          }else{
+            alert('Passwords do not match')
+          }
+
         }
+
+
+
   return (
     <section id="sign">
           <div className="container mx-auto p-4">
             <div className="bg-white w-full p-2 py-5 max-w-sm mx-auto">
               <div className="w-20 h-20 mx-auto relative overflow-hidden rounded-full">
                 <div>
-                    <img src={loginIcon} alt="login icon" />
+                    <img src={data.profilePicture || loginIcon} alt="login icon" />
                 </div>
                 <form action="">
                     <label>
@@ -70,7 +126,8 @@ const SignUp = () => {
                             value={data.name} 
                             placeholder="fullname" 
                             onChange={handleChange}
-                            className="w-full h-full outline-none bg-transpar1nt p-2" required/>
+                            className="w-full h-full outline-none bg-transpar1nt p-2" 
+                            required/>
                     </div>
                 </div>
 
@@ -83,7 +140,8 @@ const SignUp = () => {
                             value={data.email} 
                             placeholder="enter email" 
                             onChange={handleChange}
-                            className="w-full h-full outline-none bg-transpar1nt p-2" required/>
+                            className="w-full h-full outline-none bg-transpar1nt p-2" 
+                            required/>
                     </div>
                 </div>
     
@@ -98,6 +156,7 @@ const SignUp = () => {
                             placeholder='enter password' 
                             className="w-full h-full outline-none bg-transpar1nt p-2" 
                             required/>
+                            
                         <div className="cursor-pointer text-xl" onClick={() => setShowPassword((prev)=> !prev)}>
                             <span>
                                 {
@@ -120,6 +179,7 @@ const SignUp = () => {
                             placeholder='confirm password' 
                             className="w-full h-full outline-none bg-transpar1nt p-2" 
                             required/>
+
                         <div className="cursor-pointer text-xl" onClick={() => setShowConfirmPassword((prev)=> !prev)}>
                             <span>
                                 {
