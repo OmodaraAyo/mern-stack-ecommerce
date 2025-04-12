@@ -19,11 +19,19 @@ const SummaryApi = {
     },
     current_user : {
         url : `${backendDomain}/user-details`,
-        method : "get",
+        method : "GET",
         // headers : {
         //     "Content-Type" : "application/json",
         //     "Accept" : "application/json"
         // }
+    },
+    logout_user : {
+        url : `${backendDomain}/userLogout`,
+        method : "GET",
+        headers : {
+            "Content-Type" : "application/json",
+            "Accept" : "application/json"
+        }
     }
 
 }

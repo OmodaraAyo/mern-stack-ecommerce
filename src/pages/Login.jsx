@@ -45,38 +45,16 @@ const Login = () => {
 
 
       if(dataApi.success){
-        toast.success(dataApi.message, {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: false,
-          draggable: false,
-          progress: undefined,
-          theme: "light",
-          transition: Slide
-        })
+        toast.success(dataApi.message)
         navigate('/')
         fetchUserDetails()
       }
       if(dataApi.error){
-        toast.error(dataApi.message, {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: false,
-          draggable: false,
-          progress: undefined,
-          theme: "light",
-          transition: Slide
-        })
+        toast.error(dataApi.message)
 
       } 
 
     }
-
-    console.log('data login', data)
 
   return (
     <section id="login">
