@@ -4,4 +4,9 @@
     body {
         @apply bg-slate-100
     }
+    
+}
+
+@theme{
+    --shadow-customShadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
