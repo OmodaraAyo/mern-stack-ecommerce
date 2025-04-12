@@ -63,31 +63,11 @@ const SignUp = () => {
             //   console.log('data', apiResponse) 
 
             if(apiResponse.success === true){
-                toast.success(apiResponse.message, {
-                    position: "top-center",
-                    autoClose: 5000,
-                    hideProgressBar: true,
-                    closeOnClick: true,
-                    pauseOnHover: false,
-                    draggable: false,
-                    progress: undefined,
-                    theme: "light",
-                    transition: Slide
-                })
+                toast.success(apiResponse.message)
                 navigate('/login')
             }
             if(apiResponse.error){
-                toast.error(apiResponse.message,{
-                    position: "top-center",
-                    autoClose: 5000,
-                    hideProgressBar: true,
-                    closeOnClick: true,
-                    pauseOnHover: false,
-                    draggable: false,
-                    progress: undefined,
-                    theme: "light",
-                    transition: Slide
-                })
+                toast.error(apiResponse.message)
             }
 
           }else{
