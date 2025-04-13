@@ -32,6 +32,14 @@ const SummaryApi = {
             "Content-Type" : "application/json",
             "Accept" : "application/json"
         }
+    },
+    allUser : {
+        url : `${backendDomain}/allUsers`,
+        method : "GET",
+        // headers : {
+        //     "Content-Type" : "application/json",
+        //     "Accept" : "application/json"
+        // }
     }
 
 }
