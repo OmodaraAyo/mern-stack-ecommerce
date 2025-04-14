@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import { setUserDetails } from "../store/userSlice";
 import { LogOut } from "lucide-react";
 import { useState } from "react";
+import ROLE from "../service/role";
 
 const Header = () => {
   const user = useSelector((state) => state?.user?.user);
@@ -69,9 +70,14 @@ const Header = () => {
             {menuDisplay && (
               <div className="absolute bg-white bottom-0 top-11 h-fit p-2 shadow-lg rounded hidden md:block">
                 <nav>
-                  <Link to={"admin-panel"} className="whitespace-nowrap hover:bg-slate-100 p-2" onClick={() => setMenuDisplay(preve => !preve)}>
-                    Admin Panel
-                  </Link>
+                  {
+                    user?.role === ROLE.ADMIN && (
+
+                      <Link to={"admin-panel"} className="whitespace-nowrap hover:bg-slate-100 p-2" onClick={() => setMenuDisplay(preve => !preve)}>
+                        Admin Panel
+                      </Link>
+                    )
+                  }
                 </nav>
               </div>
             )}

@@ -1,21 +1,19 @@
 const backendDomain = "http://localhost:8080/api"
+const header = {
+        "Content-Type" : "application/json",
+        "Accept" : "application/json"
+}
 
 const SummaryApi = {
     signUp : {
         url : `${backendDomain}/signup`,
         method : "POST",
-        headers : {
-            "Content-Type" : "application/json",
-            "Accept" : "application/json"
-        }
+        headers : header
     },
     signIn : {
         url : `${backendDomain}/signin`,
         method : "POST",
-        headers : {
-            "Content-Type" : "application/json",
-            "Accept" : "application/json"
-        }
+        headers : header
     },
     current_user : {
         url : `${backendDomain}/user-details`,
@@ -28,10 +26,7 @@ const SummaryApi = {
     logout_user : {
         url : `${backendDomain}/userLogout`,
         method : "GET",
-        headers : {
-            "Content-Type" : "application/json",
-            "Accept" : "application/json"
-        }
+        headers : header
     },
     allUser : {
         url : `${backendDomain}/allUsers`,
@@ -40,6 +35,11 @@ const SummaryApi = {
         //     "Content-Type" : "application/json",
         //     "Accept" : "application/json"
         // }
+    },
+    updateUser : {
+        url : `${backendDomain}/update-user`,
+        method : "POST",
+        header : header
     }
 
 }

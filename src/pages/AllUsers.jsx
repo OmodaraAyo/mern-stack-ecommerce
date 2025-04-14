@@ -7,6 +7,13 @@ import ChangeUserRole from '../components/ChangeUserRole';
 
 const AllUsers = () => {
     const [allUsers, setAllUsers] = useState([]);
+    const [openUpateRole, setOpenUpateRole] = useState(false)
+    const [updateUserDetails, setUpdateUserDetails] = useState({
+        email : "",
+        name : "",
+        role : "",
+        _id : ""
+    })
 
     const fetchAllUsers = async () => {
         const fetchData = await fetch(SummaryApi.allUser.url, {
@@ -32,13 +39,13 @@ const AllUsers = () => {
     <div className='bg-white pb-4'>
       <table className='w-full userTable'>
         <thead>
-            <tr>
+            <tr className='bg-black/80 text-white'>
                 <th>Sr.</th>
                 <th>Name</th>
                 <th>Email</th>
                 <th>Role</th>
                 <th>Created Date</th>
-                <th>Action</th>
+                <th>Edit</th>
             </tr>
         </thead>
         <tbody>
@@ -51,7 +58,12 @@ const AllUsers = () => {
                         <td>{data?.role}</td>
                         <td>{moment(data?.createdAt).format('LL')}</td>
                         <td>
-                            <button className='bg-green-100 hover:bg-green-500 hover:text-white p-2 rounded-full cursor-pointer '>
+                            <button className='bg-green-100 hover:bg-green-500 hover:text-white p-2 rounded-full cursor-pointer' 
+                                onClick={()=>{
+                                    setUpdateUserDetails(data)
+                                    setOpenUpateRole(true)
+                                }}
+                            >
                                 <MdModeEdit />
                             </button>
                         </td>
@@ -61,7 +73,20 @@ const AllUsers = () => {
         </tbody>
       </table>
 
-      <ChangeUserRole/>
+      {
+        openUpateRole &&
+         (
+            <ChangeUserRole 
+            onClose={()=> setOpenUpateRole(false)} 
+            name={updateUserDetails.name}
+            email={updateUserDetails.email}
+            role={updateUserDetails.role}
+            userId={updateUserDetails._id}
+            callFunc={fetchAllUsers}
+            />
+         )
+      }
+
     </div>
   )
 }
