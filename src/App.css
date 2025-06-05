@@ -2,12 +2,12 @@
 
 @layer base {
     body {
-        @apply bg-slate-100
+        @apply bg-slate-100;
     }
     
 }
 
-@theme{
+:root{
     --shadow-customShadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -15,8 +15,8 @@
     @apply bg-white
 }
 .userTable th{
-    @apply border text-base font-medium
+    @apply border text-base font-medium;
 }
 .userTable td{
-    @apply border text-base text-center
+    @apply border text-base text-center;
 }

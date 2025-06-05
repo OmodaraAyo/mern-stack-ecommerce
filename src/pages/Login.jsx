@@ -66,11 +66,13 @@ const Login = () => {
 
           <form className="py-6 flex flex-col gap-2" onSubmit={handleSubmit}>
             <div className="grid">
-                <label>Email :</label>
+                <label htmlFor="email">Email :</label>
                 <div className="bg-slate-100 p-2">
                     <input 
                         type="email" 
                         name="email"
+                        id="email"
+                        autoComplete="email"
                         value={data.email} 
                         placeholder="enter email" 
                         onChange={handleChange}
@@ -79,11 +81,12 @@ const Login = () => {
             </div>
 
             <div>
-                <label>Password :</label>
+                <label htmlFor="password">Password :</label>
                  <div className="bg-slate-100 p-2 flex items-center">
                     <input 
                         type={showPassword ? "text": "password" } 
                         name='password' 
+                        id="password"
                         value={data.password}
                         onChange={handleChange}
                         placeholder='enter password' 
@@ -102,7 +105,7 @@ const Login = () => {
                 </Link>
             </div>
 
-            <button className="bg-rose-600 hover:bg-red-700 text-white px-6 py-2 w-full max-w-[150px] rounded-full hover:scale-110 transition-all mx-auto block mt-6 cursor-pointer">Login</button>
+            <button type="submit" className="bg-rose-600 hover:bg-red-700 text-white px-6 py-2 w-full max-w-[150px] rounded-full hover:scale-110 transition-all mx-auto block mt-6 cursor-pointer">Login</button>
           </form>
 
           <p className="">Don't have account ? <Link to={'/sign-up'} className="text-red-600 hover:text-red-700 hover:underline">Sign up</Link></p>
