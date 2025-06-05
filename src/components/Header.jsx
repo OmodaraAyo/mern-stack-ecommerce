@@ -37,7 +37,7 @@ const Header = () => {
     <header className="h-16 shadow-sm bg-white">
       <div className="container mx-auto h-full flex items-center px-4 justify-between">
         <div>
-          <Link to={"/"}>
+          <Link to={"/"} aria-label="logo">
             <Logo w={90} h={50} />
           </Link>
         </div>
@@ -45,6 +45,8 @@ const Header = () => {
         <div className="hidden lg:flex items-center w-full justify-between max-w-sm border rounded-full focus-within:shadow pl-2">
           <input
             type="text"
+            name="search"
+            id="search"
             placeholder="search product here..."
             className="w-full outline-none"
           />
@@ -54,26 +56,29 @@ const Header = () => {
         </div>
 
         <div className="flex items-center gap-7">
-          <div className="relative flex justify-center" onClick={() => setMenuDisplay(preve => !preve)}>
-            <div>
-              {user?.profilePicture ? (
-                <img
-                  src={user?.profilePicture}
-                  className="w-8 h-8 rounded-full"
-                  alt={user?.name}
-                />
-              ) : (
-                <FaRegCircleUser size={22} cursor="pointer" />
-              )}
-            </div>
-
+          <div className="relative flex justify-center">
+            {
+              user?._id && (
+                <div className="text-3xl cursor-pointer relative justify-center" onClick={() => setMenuDisplay(preve => !preve)}>
+                    {user?.profilePicture ? (
+                      <img
+                        src={user?.profilePicture}
+                        className="w-8 h-8 rounded-full"
+                        alt={user?.name}
+                        />
+                      ) : (
+                        <FaRegCircleUser size={22} cursor="pointer" />
+                      )}
+                </div>
+              )
+            }
             {menuDisplay && (
               <div className="absolute bg-white bottom-0 top-11 h-fit p-2 shadow-lg rounded hidden md:block">
                 <nav>
                   {
                     user?.role === ROLE.ADMIN && (
 
-                      <Link to={"admin-panel"} className="whitespace-nowrap hover:bg-slate-100 p-2" onClick={() => setMenuDisplay(preve => !preve)}>
+                      <Link to={"admin-panel/all-products"} className="whitespace-nowrap hover:bg-slate-100 p-2" onClick={() => setMenuDisplay(preve => !preve)}>
                         Admin Panel
                       </Link>
                     )
