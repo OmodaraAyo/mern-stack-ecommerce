@@ -18,10 +18,7 @@ const SummaryApi = {
     current_user : {
         url : `${backendDomain}/user-details`,
         method : "GET",
-        // headers : {
-        //     "Content-Type" : "application/json",
-        //     "Accept" : "application/json"
-        // }
+        headers : header
     },
     logout_user : {
         url : `${backendDomain}/userLogout`,
@@ -31,15 +28,22 @@ const SummaryApi = {
     allUser : {
         url : `${backendDomain}/allUsers`,
         method : "GET",
-        // headers : {
-        //     "Content-Type" : "application/json",
-        //     "Accept" : "application/json"
-        // }
+        headers : header
     },
     updateUser : {
         url : `${backendDomain}/update-user`,
         method : "POST",
-        header : header
+        headers : header
+    },
+    uploadProduct : {
+        url : `${backendDomain}/upload-product`,
+        method : "POST",
+        headers : header 
+    },
+    getAllProduct : {
+        url : `${backendDomain}/all-products`,
+        method : "GET",
+        headers : header
     }
 
 }
