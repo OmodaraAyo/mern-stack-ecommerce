@@ -1,5 +1,3 @@
-
-
 const url = `${import.meta.env.VITE_CLOUDINARY_URL}/upload`;
 
 const uploadImage = async (image) => {
