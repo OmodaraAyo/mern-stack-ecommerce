@@ -150,7 +150,7 @@ const UploadProduct = ({
                 <input type="number" id='sellingPrice' placeholder="enter selling price" name="sellingPrice" value={data.sellingPrice} onChange={handleOnChange} className="p-2 bg-slate-100 border rounded" onWheel={(e) => e.target.blur()} required/>
 
                 <label htmlFor="description">Description :</label>
-                <textarea id="description" className="h-28 bg-slate-100 border resize-none p-1" rows={3} placeholder="enter product description" onChange={handleOnChange} name="description" required></textarea>
+                <textarea id="description" className="h-28 bg-slate-100 border resize-none p-1" rows={3} placeholder="enter product description" onChange={handleOnChange} value={data.description} name="description" required></textarea>
 
                 <button type="submit" className="px-3 py-2 bg-red-600 text-white hover:bg-red-700 cursor-pointer">Upload Product</button>
             </form>
