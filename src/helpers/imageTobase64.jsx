@@ -10,5 +10,4 @@ const imageToBase64 = async (image) => {
 
     return data;
 }
-
 export default imageToBase64
