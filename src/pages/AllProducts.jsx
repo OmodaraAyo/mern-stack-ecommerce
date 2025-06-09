@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import UploadProduct from "../components/UploadProduct";
 import SummaryApi from "../service";
 import AdminProductCard from "../reusables/AdminProductCard";
+import { toast } from "react-toastify";
 
 const AllProducts = () => {
   const [openUploadProduct, setOpenUploadProduct] = useState(false);
   const [allProducts, setAllProducts] = useState([]);
-  console.log("All products", allProducts);
 
   useEffect(() => {
     const fetchAllProducts = async () => {
@@ -17,7 +17,7 @@ const AllProducts = () => {
       const dataResponse = await response.json();
       setAllProducts(dataResponse?.data || []);
       if (dataResponse.error) {
-        console.error("Error fetching products: ", dataResponse.message);
+        toast.error(dataResponse.error || "Failed to fetch products");
       }
     };
     // Fetch all products when the component mounts

@@ -3,11 +3,11 @@ import { MdModeEdit } from "react-icons/md";
 import AdminEditProduct from "../components/AdminEditProduct";
 
 const AdminProductCard = (props) => {
-  const { data, key } = props;
+  const { data } = props;
   const [editProduct, setEditProduct] = useState(false);
 
   return (
-    <div key={key} className="bg-white p-4 rounded">
+    <div className="bg-white p-4 rounded">
       <img
         src={data?.productImage[0]}
         alt={data.productName}

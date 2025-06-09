@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 const AdminEditProduct = (props) => {
   const { onClose, data: currentData } = props;
   const [data, setData] = useState({
+    ...currentData,
     productName: currentData?.productName || "",
     brandName: currentData?.brandName || "",
     category: currentData?.category || "",
@@ -57,19 +58,19 @@ const AdminEditProduct = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const response = await fetch(SummaryApi.uploadProduct.url, {
-      method: SummaryApi.uploadProduct.method,
+    const response = await fetch(SummaryApi.updateProduct.url, {
+      method: SummaryApi.updateProduct.method,
       credentials: "include",
-      headers: SummaryApi.uploadProduct.headers,
-      body: JSON.stringify(currentData),
+      headers: SummaryApi.updateProduct.headers,
+      body: JSON.stringify(data),
     });
     const responseData = await response.json();
 
     if (responseData.success) {
-      toast.success(responseData?.message || "Product uploaded successfully");
+      toast.success(responseData?.message || "Product updated successfully");
       onClose();
     } else {
-      alert(responseData?.message || "Something went wrong");
+      toast.error(responseData?.message || "Something went wrong");
     }
   };
 
@@ -146,7 +147,6 @@ const AdminEditProduct = (props) => {
                   id="uploadImageInput"
                   className="hidden"
                   onChange={handleUploadProductImage}
-                  required
                 />
               </div>
             </div>
@@ -225,7 +225,7 @@ const AdminEditProduct = (props) => {
             type="submit"
             className="px-3 py-2 bg-red-600 text-white hover:bg-red-700 cursor-pointer"
           >
-            Upload Product
+            Update Product
           </button>
         </form>
       </div>
