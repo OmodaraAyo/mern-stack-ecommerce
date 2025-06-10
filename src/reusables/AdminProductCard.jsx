@@ -22,22 +22,27 @@ const AdminProductCard = (props) => {
   return (
     <div className="bg-white p-4 rounded-lg w-[12rem] shadow-md flex flex-col items-center gap-2">
       <div className="w-[9.30rem]">
-        <img
-          src={data?.productImage[0]}
-          alt={data.productName}
-          width={120}
-          height={120}
-          className="w-fit mx-auto"
-        />
-        <h1 className="">{data.productName}</h1>
-
-        <div>
-          
+        <div className="w-32 h-32 flex items-center justify-center">
+          <img
+            src={data?.productImage[0]}
+            alt={data.productName}
+            width={120}
+            height={120}
+            className="mx-auto object-fill h-full"
+          />
+        </div>
+        <div className="h-14 mt-3">
+          <h1 className="text-ellipsis line-clamp-2">{data.productName}</h1>
           <p className="font-semibold">
             {displayUSDCurrency(data?.sellingPrice)}
           </p>
+        </div>
 
-          <div className="w-fit ml-auto p-2 hover:bg-green-600 bg-green-100 rounded-full hover:text-white cursor-pointer" onClick={() => setEditProduct(true)}>
+        <div>
+          <div
+            className="w-fit ml-auto p-2 hover:bg-green-600 bg-green-100 rounded-full hover:text-white cursor-pointer"
+            onClick={() => setEditProduct(true)}
+          >
             <MdModeEdit />
           </div>
         </div>

@@ -50,6 +50,16 @@ const SummaryApi = {
         method : "POST",
         headers : header
     },
+    getProductCategories : {
+        url : `${backendDomain}/get-product-category`,
+        method : "GET",
+        headers : header
+    },
+    getAllProductCategories : {
+        url : `${backendDomain}/get-all-product-category`,
+        method : "POST",
+        headers : header
+    },
 
 }
 
