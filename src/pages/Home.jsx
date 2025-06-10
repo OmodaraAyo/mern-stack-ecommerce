@@ -9,6 +9,7 @@ const Home = () => {
       <ProductCategoryList />
       <HeroProduct/>
       <HorizontalProductCard category={"airpodes"} heading={"Top's Airpods"}/>
+      <HorizontalProductCard category={"watches"} heading={"Popular's Watches"}/>
     </div>
   )
 }
