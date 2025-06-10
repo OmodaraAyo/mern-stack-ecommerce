@@ -9,7 +9,8 @@ import SummaryApi from "../service";
 import { toast } from "react-toastify";
 
 const UploadProduct = ({
-    onClose
+    onClose,
+    fetchData
 }) => {
     const [data, setData] = useState({
         productName : "",
@@ -35,13 +36,13 @@ const UploadProduct = ({
     }
 
     const handleUploadProductImage = async (e) => {
-        const file = e.target.files[0]
-        const response = await uploadImage(file)
+        const files = Array.from(e.target.files);
+        const uploadedImages = await Promise.all(files.map(file => uploadImage(file)));
 
         setData((prev)=> {
             return {
                 ...prev,
-                productImage: [...prev.productImage, response.url]
+                productImage: [...prev.productImage, ...uploadedImages.map(res => res.url)]
             }
         })
 
@@ -73,6 +74,7 @@ const UploadProduct = ({
         if(responseData.success) {
             toast.success(responseData?.message || "Product uploaded successfully");
             onClose();
+            fetchData(); // Fetch updated product list after upload
         }
         else {
             alert(responseData?.message || "Something went wrong");
@@ -113,7 +115,7 @@ const UploadProduct = ({
                         <div className="text-slate-500 flex justify-center items-center flex-col gap-2">
                             <span className="text-3xl"><FaCloudUploadAlt /></span>
                             <p className="text-sm">Upload Product Image</p>
-                            <input type="file" id="uploadImageInput" className="hidden" onChange={handleUploadProductImage} required/>
+                            <input type="file" name="productImage" id="uploadImageInput" className="hidden" onChange={handleUploadProductImage} multiple/>
                         </div>
                     </div>
                 </label>
@@ -150,7 +152,7 @@ const UploadProduct = ({
                 <input type="number" id='sellingPrice' placeholder="enter selling price" name="sellingPrice" value={data.sellingPrice} onChange={handleOnChange} className="p-2 bg-slate-100 border rounded" onWheel={(e) => e.target.blur()} required/>
 
                 <label htmlFor="description">Description :</label>
-                <textarea id="description" className="h-28 bg-slate-100 border resize-none p-1" rows={3} placeholder="enter product description" onChange={handleOnChange} value={data.description} name="description" required></textarea>
+                <textarea id="description" className="h-28 bg-slate-100 border resize-none p-1" rows={3} placeholder="enter product description" onChange={handleOnChange} value={data.description} name="description" autoComplete="on" required></textarea>
 
                 <button type="submit" className="px-3 py-2 bg-red-600 text-white hover:bg-red-700 cursor-pointer">Upload Product</button>
             </form>
