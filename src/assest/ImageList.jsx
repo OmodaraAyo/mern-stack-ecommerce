@@ -8,9 +8,10 @@ import image4 from "../assest/banner/img4.jpg";
 import image4_mobile from "../assest/banner/img4_mobile.jpg";
 import image5 from "../assest/banner/img5.webp";
 import image5_mobile from "../assest/banner/img5_mobile.png";
+import flashSale from "../assest/banner/flashSale.jpg"
 
 const HeroSectionImages = [
-    { src: image1, alt: 'Hero Image 1' },
+    { src: flashSale, alt: 'Hero Image 1' },
     { src: image1_mobile, alt: 'Hero Image 1 Mobile' },
     { src: image2, alt: 'Hero Image 2' },
     { src: image2_mobile, alt: 'Hero Image 2 Mobile' },

@@ -52,8 +52,8 @@ const HeroProduct = () => {
       <div className="h-[17rem] md:h-[19rem] w-full bg-slate-200 relative">
         <div className="absolute z-10 w-full h-full md:flex items-center hidden">
           <div className="flex justify-between w-full text-2xl">
-            <button onClick={prevImage} className="bg-white shadow-md rounded-full p-1"><FaAngleLeft/></button>            
-            <button onClick={nextImage} className="bg-white shadow-md rounded-full p-1"><FaAngleRight/></button>  
+            <button onClick={prevImage} className="bg-white shadow-md rounded-full p-1 cursor-pointer"><FaAngleLeft/></button>            
+            <button onClick={nextImage} className="bg-white shadow-md rounded-full p-1 cursor-pointer"><FaAngleRight/></button>  
           </div>
         </div>
 

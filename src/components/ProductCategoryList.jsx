@@ -26,12 +26,12 @@ const ProductCategoryList = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <div className="flex flex-wrap justify-between gap-2 overflow-scroll scrollbar-none px-2">
+      <div className="flex flex-wrap justify-between gap-2 overflow-scroll scrollbar-none p-2">
         {loading ? (
           <>
           {
             categoryLoading.map((_, index) => (
-                <div key={index} className="h-16 w-16 md:w-20 md:h-20 rounded-full overflow-hidden p-4 bg-slate-200 flex items-center justify-center shadow-md animate-pulse"></div>
+                <div key={index} className="h-16 w-16 md:w-20 md:h-20 rounded-full overflow-hidden p-4 bg-slate-200 flex items-center justify-center shadow-md animate-pulse hover:cursor-progress"></div>
             ))
           }
           </>
