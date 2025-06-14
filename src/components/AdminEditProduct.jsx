@@ -9,7 +9,7 @@ import SummaryApi from "../service";
 import { toast } from "react-toastify";
 
 const AdminEditProduct = (props) => {
-  const { onClose, data: currentData } = props;
+  const { onClose, data: currentData, fetchData } = props;
   const [data, setData] = useState({
     ...currentData,
     productName: currentData?.productName || "",
@@ -69,6 +69,7 @@ const AdminEditProduct = (props) => {
     if (responseData.success) {
       toast.success(responseData?.message || "Product updated successfully");
       onClose();
+      fetchData(); // Refresh the product list after update
     } else {
       toast.error(responseData?.message || "Something went wrong");
     }

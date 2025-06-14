@@ -11,6 +11,7 @@ import { setUserDetails } from "../store/userSlice";
 import { LogOut } from "lucide-react";
 import { useState } from "react";
 import ROLE from "../service/role";
+import logo from "../assest/logo.svg"
 
 const Header = () => {
   const user = useSelector((state) => state?.user?.user);
@@ -34,11 +35,11 @@ const Header = () => {
     }
   };
   return (
-    <header className="h-16 shadow-sm bg-white">
+    <header className="h-16 shadow-sm bg-white fixed w-full z-40">
       <div className="container mx-auto h-full flex items-center px-4 justify-between">
         <div>
           <Link to={"/"} aria-label="logo">
-            <Logo w={90} h={50} />
+            <img src={logo} alt="logo" width={140} height={50}/>
           </Link>
         </div>
 
