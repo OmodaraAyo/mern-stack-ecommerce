@@ -53,7 +53,7 @@ function App() {
           transition={Slide}
         />
         <Header />
-        <main className="min-h-[calc(100vh-120px)]">
+        <main className="min-h-[calc(100vh-120px)] py-16 px-4">
           <Outlet />
         </main>
         <Footer />

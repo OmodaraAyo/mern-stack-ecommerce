@@ -60,6 +60,11 @@ const SummaryApi = {
         method : "POST",
         headers : header
     },
+    getProductDetails : {
+        url : `${backendDomain}/get-product-details`,
+        method : "POST",
+        headers :  header
+    }
 
 }
 

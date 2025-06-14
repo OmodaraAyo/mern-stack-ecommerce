@@ -5,6 +5,8 @@ import fetchProductCategories from "../helpers/fetchProductCategories";
 import displayUSDCurrency from "../helpers/DisplayCurrency";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import { useRef } from "react";
+import { Link } from "react-router-dom";
+import addToCart from "../helpers/AddToCart";
 
 const HorizontalProductCard = (props) => {
   const { category, heading } = props;
@@ -59,7 +61,7 @@ const HorizontalProductCard = (props) => {
       ))
         ) : (
           data.map((product, index) => (
-        <div key={index} className="w-full min-w-[280px] md:min-w-[320px] h-36 max-w-[280px] md:max-w-[320px] bg-white rounded-sm shadow-md flex">
+        <Link to={"product/"+product?._id} key={index} className="w-full min-w-[280px] md:min-w-[320px] h-36 max-w-[280px] md:max-w-[320px] bg-white rounded-sm shadow-md flex">
           <div className="bg-slate-200 h-full min-w-[120px] md:min-w-[145px] p-4 rounded-sm">
             <img src={product.productImage[0]} alt={product.productName} className="object-scale-down h-full mix-blend-multiply hover:scale-110 transition-all cursor-pointer"/>
           </div>
@@ -70,9 +72,9 @@ const HorizontalProductCard = (props) => {
                 <p className="text-red-600 font-medium">{displayUSDCurrency(product?.sellingPrice)}</p>
                 <p className="text-slate-400 line-through">{displayUSDCurrency(product?.price)}</p>
             </div>
-            <button className="bg-red-600 hover:bg-red-700 text-white text-sm px-3 py-1 rounded-full cursor-pointer transition-all transform duration-300 ease-in-out">Add to cart</button>
+            <button className="bg-red-600 hover:bg-red-700 text-white text-sm px-3 py-1 rounded-full cursor-pointer transition-all transform duration-300 ease-in-out" onClick={(e) => addToCart(e, product?._id)}>Add to cart</button>
           </div>
-        </div>
+        </Link>
       ))
         )}
       </div>
