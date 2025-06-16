@@ -3,25 +3,21 @@ import { useEffect } from "react";
 import { useState } from "react";
 import fetchProductCategories from "../helpers/fetchProductCategories";
 import displayUSDCurrency from "../helpers/DisplayCurrency";
-import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
-import { useRef } from "react";
 import { Link } from "react-router-dom";
 import addToCart from "../helpers/AddToCart";
 import { useContext } from "react";
 import Context from "../context";
 
-const VerticalProductCard = (props) => {
+const ProductByCategory = (props) => {
   const { category, heading } = props;
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const LoadingList = new Array(13).fill(null);
-  // const [scroll, setIsScroll] = useState(0);
-  const scrollElement = useRef();
   const { fetchNumberOfProductInUserCart } = useContext(Context);
-    
-      const handleAddToCart = async(e, id) => {
-        await addToCart(e, id)
-        fetchNumberOfProductInUserCart()
+
+  const handleAddToCart = async(e, id) => {
+    await addToCart(e, id)
+    fetchNumberOfProductInUserCart()
   }
 
   const fetchData = async () => {
@@ -36,21 +32,12 @@ const VerticalProductCard = (props) => {
     fetchData();
   }, []);
 
-  const scrollRight = () => {
-    scrollElement.current.scrollLeft += 300
-  }
-
-  const scrollLeft = () => {
-    scrollElement.current.scrollLeft -= 300
-  }
 
 
   return (
     <section className="container mx-auto p-4 relative">
       <h2 className="text-2xl font-semibold py-2">{heading}</h2>
-      <div className="flex items-center gap-4 md:gap-6 overflow-x-scroll scrollbar-none transition-all" ref={scrollElement}>
-        <button onClick={scrollLeft} className="bg-white shadow-md rounded-full p-1 absolute left-0 text-lg hidden md:block cursor-pointer"><FaAngleLeft/></button>            
-        <button onClick={scrollRight} className="bg-white shadow-md rounded-full p-1 absolute right-0 text-lg hidden md:block cursor-pointer"><FaAngleRight/></button>  
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,320px))] justify-between md:gap-6 overflow-x-scroll scrollbar-none transition-all">
         {loading
           ? LoadingList.map((_, index) => (
               <div key={index} className="w-full min-w-[280px] md:min-w-[320px] max-w-[280px] md:max-w-[320px] bg-white rounded-sm shadow-md animate-pulse">
@@ -80,7 +67,7 @@ const VerticalProductCard = (props) => {
                       <p className="text-red-600 font-medium">{displayUSDCurrency(product?.sellingPrice)}</p>
                       <p className="text-slate-400 line-through">{displayUSDCurrency(product?.price)}</p>
                   </div>
-                  <button className="bg-red-600 hover:bg-red-700 text-white text-sm px-3 py-1 rounded-full cursor-pointer transition-all transform duration-300 ease-in-out" onClick={(e) => handleAddToCart(e, product?._id)}>Add to cart</button>
+                  <button className="bg-red-600 hover:bg-red-700 text-white text-sm px-3 py-1 rounded-full cursor-pointer transition-all transform duration-300 ease-in-out" onClick={(e)=>handleAddToCart(e, product?._id)}>Add to cart</button>
                 </div>
               </Link>
             ))
@@ -90,4 +77,4 @@ const VerticalProductCard = (props) => {
   );
 };
 
-export default VerticalProductCard;
+export default ProductByCategory;

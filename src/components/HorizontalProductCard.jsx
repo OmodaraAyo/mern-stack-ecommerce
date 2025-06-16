@@ -7,6 +7,8 @@ import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
 import addToCart from "../helpers/AddToCart";
+import { useContext } from "react";
+import Context from "../context";
 
 const HorizontalProductCard = (props) => {
   const { category, heading } = props;
@@ -15,6 +17,13 @@ const HorizontalProductCard = (props) => {
   const LoadingList = new Array(13).fill(null);
   const [scroll, setIsScroll] = useState(0);
   const scrollElement = useRef();
+  const { fetchNumberOfProductInUserCart } = useContext(Context);
+  
+    const handleAddToCart = async(e, id) => {
+      await addToCart(e, id)
+      fetchNumberOfProductInUserCart()
+    }
+  
 
   const fetchData = async () => {
     setLoading(true);
@@ -72,7 +81,7 @@ const HorizontalProductCard = (props) => {
                 <p className="text-red-600 font-medium">{displayUSDCurrency(product?.sellingPrice)}</p>
                 <p className="text-slate-400 line-through">{displayUSDCurrency(product?.price)}</p>
             </div>
-            <button className="bg-red-600 hover:bg-red-700 text-white text-sm px-3 py-1 rounded-full cursor-pointer transition-all transform duration-300 ease-in-out" onClick={(e) => addToCart(e, product?._id)}>Add to cart</button>
+            <button className="bg-red-600 hover:bg-red-700 text-white text-sm px-3 py-1 rounded-full cursor-pointer transition-all transform duration-300 ease-in-out" onClick={(e) => handleAddToCart(e, product?._id)}>Add to cart</button>
           </div>
         </Link>
       ))
