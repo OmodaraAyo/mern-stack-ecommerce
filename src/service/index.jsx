@@ -64,6 +64,21 @@ const SummaryApi = {
         url : `${backendDomain}/get-product-details`,
         method : "POST",
         headers :  header
+    },
+    addProductToCart  : {
+        url : `${backendDomain}/addToCart`,
+        method : "POST",
+        headers : header
+    },
+    countNumberOfProductInCart : {
+        url : `${backendDomain}/countNumberOfProductInCart`,
+        method : "GET",
+        headers : header
+    },
+    viewCartProduct : {
+        url : `${backendDomain}/view-cart-products`,
+        method : "GET",
+        headers : header
     }
 
 }

@@ -11,12 +11,15 @@ import { setUserDetails } from "../store/userSlice";
 import { LogOut } from "lucide-react";
 import { useState } from "react";
 import ROLE from "../service/role";
-import logo from "../assest/logo.svg"
+import logo from "../assest/logo.svg";
+import { useContext } from "react";
+import Context from "../context";
 
 const Header = () => {
   const user = useSelector((state) => state?.user?.user);
   const dispatch = useDispatch();
-  const [menuDisplay, setMenuDisplay] = useState(false); 
+  const [menuDisplay, setMenuDisplay] = useState(false);
+  const context = useContext(Context);
 
   const handleLogout = async () => {
     const fetchData = await fetch(SummaryApi.logout_user.url, {
@@ -34,12 +37,14 @@ const Header = () => {
       toast.error(data.message);
     }
   };
+
+  // console.log("header add to cart: ", context);
   return (
     <header className="h-16 shadow-sm bg-white fixed w-full z-40">
       <div className="container mx-auto h-full flex items-center px-4 justify-between">
         <div>
           <Link to={"/"} aria-label="logo">
-            <img src={logo} alt="logo" width={140} height={50}/>
+            <img src={logo} alt="logo" width={140} height={50} />
           </Link>
         </div>
 
@@ -58,46 +63,50 @@ const Header = () => {
 
         <div className="flex items-center gap-7">
           <div className="relative flex justify-center">
-            {
-              user?._id && (
-                <div className="text-3xl cursor-pointer relative justify-center" onClick={() => setMenuDisplay(preve => !preve)}>
-                    {user?.profilePicture ? (
-                      <img
-                        src={user?.profilePicture}
-                        className="w-8 h-8 rounded-full"
-                        alt={user?.name}
-                        />
-                      ) : (
-                        <FaRegCircleUser size={22} cursor="pointer" />
-                      )}
-                </div>
-              )
-            }
+            {user?._id && (
+              <div
+                className="text-3xl cursor-pointer relative justify-center"
+                onClick={() => setMenuDisplay((preve) => !preve)}
+              >
+                {user?.profilePicture ? (
+                  <img
+                    src={user?.profilePicture}
+                    className="w-8 h-8 rounded-full"
+                    alt={user?.name}
+                  />
+                ) : (
+                  <FaRegCircleUser size={22} cursor="pointer" />
+                )}
+              </div>
+            )}
             {menuDisplay && (
               <div className="absolute bg-white bottom-0 top-11 h-fit p-2 shadow-lg rounded hidden md:block">
                 <nav>
-                  {
-                    user?.role === ROLE.ADMIN && (
-
-                      <Link to={"admin-panel/all-products"} className="whitespace-nowrap hover:bg-slate-100 p-2" onClick={() => setMenuDisplay(preve => !preve)}>
-                        Admin Panel
-                      </Link>
-                    )
-                  }
+                  {user?.role === ROLE.ADMIN && (
+                    <Link
+                      to={"admin-panel/all-products"}
+                      className="whitespace-nowrap hover:bg-slate-100 p-2"
+                      onClick={() => setMenuDisplay((preve) => !preve)}
+                    >
+                      Admin Panel
+                    </Link>
+                  )}
                 </nav>
               </div>
             )}
           </div>
 
-          <div className="relative ">
-            <span>
-              <BsCart3 size={22} cursor="pointer" />
-            </span>
+          {user?._id && (
+            <Link to={"cart"} className="relative ">
+              <span>
+                <BsCart3 size={22} cursor="pointer" />
+              </span>
 
-            <div className="bg-red-600 text-white w-5 h-5 rounded-full p-1 flex items-center justify-center absolute -top-2 -right-3">
-              <p className="text-sm">0</p>
-            </div>
-          </div>
+              <div className="bg-red-600 text-white w-5 h-5 rounded-full p-1 flex items-center justify-center absolute -top-2 -right-3">
+                <p className="text-sm">{context?.countCartItems}</p>
+              </div>
+            </Link>
+          )}
 
           <div>
             {user?._id ? (
