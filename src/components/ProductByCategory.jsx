@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import addToCart from "../helpers/AddToCart";
 import { useContext } from "react";
 import Context from "../context";
+import ScrollWindowTop from "../helpers/ScrollWindowTop";
 
 const ProductByCategory = (props) => {
   const { category, heading } = props;
@@ -56,7 +57,7 @@ const ProductByCategory = (props) => {
               </div>
             ))
           : data.map((product, index) => (
-              <Link to={"product/"+product?._id} key={index} className="w-full min-w-[280px] md:min-w-[320px] max-w-[280px] md:max-w-[320px] bg-white rounded-sm shadow-md ">
+              <Link to={"/product/"+product?._id} key={index} className="w-full min-w-[280px] md:min-w-[320px] max-w-[280px] md:max-w-[320px] bg-white rounded-sm shadow-md " onClick={()=> ScrollWindowTop}>
                 <div className="bg-slate-200 h-48 min-w-[280px] md:min-w-[145px] p-4 rounded-sm flex justify-center items-center">
                   <img src={product.productImage[0]} alt={product.productName} className="object-scale-down h-full mix-blend-multiply hover:scale-110 transition-all cursor-pointer"/>
                 </div>

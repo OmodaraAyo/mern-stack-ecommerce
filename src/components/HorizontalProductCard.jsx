@@ -15,7 +15,6 @@ const HorizontalProductCard = (props) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const LoadingList = new Array(13).fill(null);
-  const [scroll, setIsScroll] = useState(0);
   const scrollElement = useRef();
   const { fetchNumberOfProductInUserCart } = useContext(Context);
   

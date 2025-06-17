@@ -3,7 +3,7 @@ import Logo from "./logo";
 import { CgSearch } from "react-icons/cg";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { BsCart3 } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import SummaryApi from "../service";
 import { toast } from "react-toastify";
@@ -20,6 +20,7 @@ const Header = () => {
   const dispatch = useDispatch();
   const [menuDisplay, setMenuDisplay] = useState(false);
   const context = useContext(Context);
+  const navigate = useNavigate();
 
   const handleLogout = async () => {
     const fetchData = await fetch(SummaryApi.logout_user.url, {
@@ -38,7 +39,15 @@ const Header = () => {
     }
   };
 
-  // console.log("header add to cart: ", context);
+  const handleSearch = (e)=>{
+    const { value } = e.target
+
+    if(value){
+      navigate(`/search?q=${value}`)
+    }else{
+      navigate("/search")
+    }
+  }
   return (
     <header className="h-16 shadow-sm bg-white fixed w-full z-40">
       <div className="container mx-auto h-full flex items-center px-4 justify-between">
@@ -55,6 +64,7 @@ const Header = () => {
             id="search"
             placeholder="search product here..."
             className="w-full outline-none"
+            onChange={handleSearch}
           />
           <div className="text-lg w-[3.13rem] h-8 bg-red-600 flex items-center justify-center rounded-r-full text-white">
             <CgSearch />
