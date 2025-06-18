@@ -3,7 +3,6 @@ import { useParams } from "react-router";
 import SummaryApi from "../service";
 import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 import displayUSDCurrency from "../helpers/DisplayCurrency";
-import VerticalProductCard from "../components/VerticalProductCard";
 import ProductByCategory from "../components/ProductByCategory";
 
 const Productdetails = () => {

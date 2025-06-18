@@ -1,44 +1,22 @@
-import React from "react";
-import { useEffect } from "react";
-import { useState } from "react";
-import fetchProductCategories from "../helpers/fetchProductCategories";
-import displayUSDCurrency from "../helpers/DisplayCurrency";
-import { Link } from "react-router-dom";
-import addToCart from "../helpers/AddToCart";
-import { useContext } from "react";
-import Context from "../context";
-import ScrollWindowTop from "../helpers/ScrollWindowTop";
+import React from 'react'
+import ScrollWindowTop from '../helpers/ScrollWindowTop';
+import displayUSDCurrency from '../helpers/DisplayCurrency';
+import addToCart from '../helpers/AddToCart';
+import { useContext } from 'react';
+import Context from '../context';
+import { Link } from 'react-router-dom';
 
-const ProductByCategory = (props) => {
-  const { category, heading } = props;
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const LoadingList = new Array(13).fill(null);
-  const { fetchNumberOfProductInUserCart } = useContext(Context);
+const VerticalSearchProductCard = (props) => {
+    const { loading, data= [] } = props
+    const LoadingList = new Array(13).fill(null);
+    const { fetchNumberOfProductInUserCart } = useContext(Context)
 
-  const handleAddToCart = async(e, id) => {
+    const handleAddToCart = async(e, id) => {
     await addToCart(e, id)
     fetchNumberOfProductInUserCart()
   }
-
-  const fetchData = async () => {
-    setLoading(true);
-    const product = await fetchProductCategories(category);
-    setData(product?.data || []);
-    setLoading(false);
-  };
-
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-
-
   return (
-    <section className="container mx-auto p-4 relative">
-      <h2 className="text-2xl font-semibold py-2">{heading}</h2>
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,320px))] justify-between md:gap-6 overflow-x-scroll scrollbar-none transition-all">
+       <div className="grid grid-cols-[repeat(auto-fit,minmax(260px,300px))] justify-center md:justify-between gap-3 p-1 overflow-x-scroll scrollbar-none transition-all">
         {loading
           ? LoadingList.map((_, index) => (
               <div key={index} className="w-full min-w-[280px] md:min-w-[320px] max-w-[280px] md:max-w-[320px] bg-white rounded-sm shadow-md animate-pulse">
@@ -57,9 +35,9 @@ const ProductByCategory = (props) => {
               </div>
             ))
           : data.map((product, index) => (
-              <Link to={"/product/"+product?._id} key={index} className="w-full min-w-[280px] md:min-w-[320px] max-w-[280px] md:max-w-[320px] bg-white rounded-sm shadow-md " onClick={()=> ScrollWindowTop}>
-                <div className="bg-slate-200 h-48 min-w-[280px] md:min-w-[145px] p-4 rounded-sm flex justify-center items-center">
-                  <img src={product.productImage[0]} alt={product.productName} className="object-scale-down h-full mix-blend-multiply hover:scale-110 transition-all cursor-pointer"/>
+              <Link to={"/product/"+product?._id} key={index} className="w-full min-w-[280px] md:min-w-[300px] max-w-[280px] md:max-w-[300px] bg-white rounded-sm shadow-md " onClick={ScrollWindowTop}>
+                <div key={product?._id} className="bg-slate-200 h-48 min-w-[280px] md:min-w-[145px] p-4 rounded-sm flex justify-center items-center">
+                  <img src={product?.productImage[0]} alt={product.productName} className="object-scale-down h-full mix-blend-multiply hover:scale-110 transition-all cursor-pointer"/>
                 </div>
                 <div className="p-4 grid gap-3">
                   <h2 className="font-medium text-base text-ellipsis line-clamp-1 text-black">{product?.productName}</h2>
@@ -74,8 +52,7 @@ const ProductByCategory = (props) => {
             ))
         }
       </div>
-    </section>
-  );
-};
+  )
+}
 
-export default ProductByCategory;
+export default VerticalSearchProductCard

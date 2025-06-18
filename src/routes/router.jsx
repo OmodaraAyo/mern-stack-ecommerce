@@ -7,9 +7,10 @@ import SignUp from "../pages/SignUp";
 import AdminPanel from "../pages/AdminPanel";
 import AllUsers from "../pages/AllUsers";
 import AllProducts from "../pages/AllProducts";
-import ProductCategory from "../pages/ProductCategory";
+import ProductCategories from "../pages/ProductCategories";
 import Productdetails from "../pages/Productdetails";
 import Cart from "../pages/Cart"
+import SearchProduct from "../pages/SearchProduct";
 
 const ROUTES = createBrowserRouter([
     {
@@ -34,7 +35,7 @@ const ROUTES = createBrowserRouter([
             },
             {
                 path: "product-category/:categoryName",
-                element: <ProductCategory/>
+                element: <ProductCategories/>
             },
             {
                 path: "product/:id",
@@ -43,6 +44,10 @@ const ROUTES = createBrowserRouter([
             {
                 path: "cart",
                 element: <Cart/>
+            },
+            {
+                path: "search",
+                element : <SearchProduct/>
             },
             {
                 path: "admin-panel",

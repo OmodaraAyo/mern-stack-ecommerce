@@ -1,3 +1,4 @@
+//old
 const displayUSDCurrency = (num) => {
     const formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
@@ -8,3 +9,14 @@ const displayUSDCurrency = (num) => {
     return formatter.format(num);
 }
 export default displayUSDCurrency;
+
+//new
+// const DisplayUSDCurrency = (amount) => {
+//   if (typeof amount !== "number") return "";
+//   return amount.toLocaleString("en-US", {
+//     style: "currency",
+//     currency: "USD",
+//   });
+// };
+
+// export default DisplayUSDCurrency
