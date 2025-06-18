@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import SummaryApi from "../service";
+import VerticalSearchProductCard from "../reusables/VerticalSearchProductCard";
 
 const SearchProduct = () => {
   const query = useLocation();
@@ -15,6 +16,7 @@ const SearchProduct = () => {
     const responseData = await response.json();
     setIsLoading(false);
     console.log("responseData from search", responseData);
+    setData(Array.isArray(responseData.data) ? responseData.data : [])
   };
 
   useEffect(() => {
@@ -24,19 +26,17 @@ const SearchProduct = () => {
     <div className="container mx-auto p-4">
       {isLoading && <p className="text-lg text-center">Loading...</p>}
 
-      <p>Search Result : {data.length}</p>
+      <p className="text-md font-semibold py-3">Search Result : {Array.isArray(data) ? data.length : 0}</p>
       
-      {data.length === 0 && !isLoading && (
+      {Array.isArray(data) && data.length === 0 && !isLoading && (
         <p className="bg-white text-lg text-center p-4">No Data found</p>
       )}
 
-      {/* {
-        data.length !== 0 && !isLoading && (
-            data.map((product, index)=> (
-
-            ))
+      {
+        Array.isArray(data) && data.length !== 0 && !isLoading && (
+          <VerticalSearchProductCard loading={ isLoading } data={data}/>
         )
-      } */}
+      }
     </div>
   );
 };

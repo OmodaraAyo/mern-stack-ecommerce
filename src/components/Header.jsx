@@ -3,7 +3,7 @@ import Logo from "./logo";
 import { CgSearch } from "react-icons/cg";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { BsCart3 } from "react-icons/bs";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import SummaryApi from "../service";
 import { toast } from "react-toastify";
@@ -21,6 +21,8 @@ const Header = () => {
   const [menuDisplay, setMenuDisplay] = useState(false);
   const context = useContext(Context);
   const navigate = useNavigate();
+  const searchInput = useLocation();
+  const [search, setSearch] = useState(searchInput?.search?.split("=")[1])
 
   const handleLogout = async () => {
     const fetchData = await fetch(SummaryApi.logout_user.url, {
@@ -41,6 +43,7 @@ const Header = () => {
 
   const handleSearch = (e)=>{
     const { value } = e.target
+    setSearch(value)
 
     if(value){
       navigate(`/search?q=${value}`)
@@ -62,6 +65,7 @@ const Header = () => {
             type="text"
             name="search"
             id="search"
+            value={search}
             placeholder="search product here..."
             className="w-full outline-none"
             onChange={handleSearch}
