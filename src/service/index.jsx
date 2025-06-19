@@ -94,6 +94,11 @@ const SummaryApi = {
         url : `${backendDomain}/search`,
         method : "GET",
         headers : header
+    },
+    filterProduct : {
+        url : `${backendDomain}/filter-product`,
+        method : "POST",
+        headers : header
     }
 
 }
