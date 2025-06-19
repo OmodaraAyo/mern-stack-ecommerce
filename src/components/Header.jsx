@@ -22,7 +22,9 @@ const Header = () => {
   const context = useContext(Context);
   const navigate = useNavigate();
   const searchInput = useLocation();
-  const [search, setSearch] = useState(searchInput?.search?.split("=")[1])
+  const url = new URLSearchParams(searchInput?.search)
+  const searchQuery = url.getAll("q")
+  const [search, setSearch] = useState(searchQuery)
 
   const handleLogout = async () => {
     const fetchData = await fetch(SummaryApi.logout_user.url, {
@@ -35,6 +37,7 @@ const Header = () => {
     if (data.success) {
       toast.success(data.message);
       dispatch(setUserDetails(null));
+      navigate("/")
     }
     if (data.error) {
       toast.error(data.message);
