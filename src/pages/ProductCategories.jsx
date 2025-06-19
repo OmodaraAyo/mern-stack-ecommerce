@@ -8,23 +8,24 @@ const ProductCategories = () => {
   const [data, setData] = useState([]);
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const location = useLocation()
-  const urlSearch = new URLSearchParams(location.search)
-  const urlCategoryListInArray = urlSearch.getAll("category")
-    const urlCategoryListObject = {}
-  urlCategoryListInArray.forEach(el => {
-    urlCategoryListObject[el] = true
-  })
+  const location = useLocation();
+  const urlSearch = new URLSearchParams(location.search);
+  const urlCategoryListInArray = urlSearch.getAll("category");
+  const urlCategoryListObject = {};
+  urlCategoryListInArray.forEach((el) => {
+    urlCategoryListObject[el] = true;
+  });
   const [selectCategory, setSelectCategory] = useState(urlCategoryListObject);
-  const [fileteredCategoryList, setFilteredCategoryList] = useState([])
+  const [fileteredCategoryList, setFilteredCategoryList] = useState([]);
+  const [sortBy, setSortBy] = useState("");
 
   const fetchData = useCallback(async () => {
     const response = await fetch(SummaryApi.filterProduct.url, {
       method: SummaryApi.filterProduct.method,
-      headers : SummaryApi.filterProduct.headers,
-      body : JSON.stringify({
-        category : fileteredCategoryList
-      })
+      headers: SummaryApi.filterProduct.headers,
+      body: JSON.stringify({
+        category: fileteredCategoryList,
+      }),
     });
 
     const responseData = await response.json();
@@ -33,31 +34,59 @@ const ProductCategories = () => {
   }, [fileteredCategoryList]);
 
   const handleSelectedCategories = (e) => {
-    const { name, value, checked } = e.target
+    const { name, value, checked } = e.target;
 
-    setSelectCategory((preve)=>{
+    setSelectCategory((preve) => {
       return {
         ...preve,
-        [value] : checked
-      }
-    })
-  }
+        [value]: checked,
+      };
+    });
+  };
 
-  useEffect(()=>{
-    const arrayOfCategory = Object.keys(selectCategory).map(categoryKeyName => {
-      if(selectCategory[categoryKeyName]){
-        return categoryKeyName
-      }
-      return null
-    }).filter(el => el)
+  useEffect(() => {
+    // const arrayOfCategory = Object.keys(selectCategory)
+    //   .map((categoryKeyName) => {
+    //     if (selectCategory[categoryKeyName]) {
+    //       return categoryKeyName;
+    //     }
+    //     return null;
+    //   })
+    //   .filter((el) => el);
+    const arrayOfCategory = Object.keys(selectCategory).filter(
+      (key) => selectCategory[key]
+    );
 
-    setFilteredCategoryList(arrayOfCategory)
+    setFilteredCategoryList(arrayOfCategory);
 
-    const urlFormat = arrayOfCategory.map(el => `category=${el}`).join('&');
-    navigate("/product-category?"+urlFormat)
-  }, [selectCategory])
-  
-  
+    const urlFormat = arrayOfCategory.map((el) => `category=${el}`).join("&");
+    navigate("/product-category?" + urlFormat);
+  }, [selectCategory]);
+
+  const handleSortPrice = (e) => {
+    const { value } = e.target;
+    setSortBy(value);
+
+    // if (value === "asc") {
+    //   setData((preve) => preve.sort((a, b) => a.sellingPrice - b.sellingPrice));
+    // }
+    // if (value === "dsc") {
+    //   setData((preve) => preve.sort((a, b) => b.sellingPrice - a.sellingPrice));
+    // }
+    if (value === "asc") {
+      setData((prev) =>
+        [...prev].sort((a, b) => a.sellingPrice - b.sellingPrice)
+      );
+    }
+    if (value === "dsc") {
+      setData((prev) =>
+        [...prev].sort((a, b) => b.sellingPrice - a.sellingPrice)
+      );
+    }
+  };
+
+  useEffect(() => {}, [sortBy]);
+
   useEffect(() => {
     fetchData();
   }, [fetchData]);
@@ -75,12 +104,26 @@ const ProductCategories = () => {
 
             <form className="'text-sm flex flex-col gap-2 py-2">
               <div className="flex items-center gap-3">
-                <input type="radio" name="sortBy" id="sort-price" />
+                <input
+                  type="radio"
+                  name="sortBy"
+                  id="sort-price"
+                  value={"asc"}
+                  checked={sortBy === "asc"}
+                  onChange={handleSortPrice}
+                />
                 <label htmlFor="sort-price">Price - Low to High</label>
               </div>
 
               <div className="flex items-center gap-3">
-                <input type="radio" name="sortBy" id="sort-price-h" />
+                <input
+                  type="radio"
+                  name="sortBy"
+                  id="sort-price-h"
+                  value={"dsc"}
+                  checked={sortBy === "dsc"}
+                  onChange={handleSortPrice}
+                />
                 <label htmlFor="sort-price-h">Price - High to Low</label>
               </div>
             </form>
@@ -112,13 +155,13 @@ const ProductCategories = () => {
 
         {/** right side */}
         <div className="px-4">
-          <p className="font-medium text-slate-800 text-base mb-2">Search Results : {data?.length}</p>
+          <p className="font-medium text-slate-800 text-base mb-2">
+            Search Results : {data?.length ?? 0}
+          </p>
           <div className="min-h-[calc(100vh-120px)] overflow-y-scroll scrollbar-none max-h-[calc(100vh-120px)]">
-            {
-            data?.length !== 0 && !isLoading && (
-              <VerticalSearchProductCard data={data} loading={isLoading}/>
-            )
-          }
+            {data?.length !== 0 && !isLoading && (
+              <VerticalSearchProductCard data={data} loading={isLoading} />
+            )}
           </div>
         </div>
       </div>

@@ -14,15 +14,12 @@ const Cart = () => {
   const loadingCart = new Array(context.countCartItems).fill(null);
 
   const fetchCartData = async () => {
-    setIsLoading(true);
     const response = await fetch(SummaryApi.viewCartProduct.url, {
       method: SummaryApi.viewCartProduct.method,
       credentials: "include",
       headers: SummaryApi.viewCartProduct.headers,
     });
-
     const responseData = await response.json();
-    setIsLoading(false)
 
     if (responseData.success) {
       setData(responseData?.data);
@@ -87,10 +84,16 @@ const Cart = () => {
 
 const totalQty = data.reduce((previousValue,currentValue)=> previousValue + currentValue?.quantity,0)
 const totalPrice = data.reduce((preve, currentValue)=> preve + (currentValue?.quantity * currentValue?.productId.sellingPrice),0)
-  console.log("from cart", data);
+
+
+const handleLoading = async()=>{
+  await fetchCartData()
+}
 
   useEffect(() => {
-    fetchCartData();
+    setIsLoading(true);
+    handleLoading();
+    setIsLoading(false);
   }, []);
   return (
     <div className="lg:px-16">
