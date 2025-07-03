@@ -36,7 +36,7 @@ const VerticalProductCard = (props) => {
   }, []);
 
   const scrollRight = () => {
-    scrollElement.current.scrollLeft += 300
+    scrollElement.current.scrollRight += 300
   }
 
   const scrollLeft = () => {
