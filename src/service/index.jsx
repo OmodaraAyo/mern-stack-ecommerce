@@ -1,4 +1,4 @@
-const backendDomain = "http://localhost:8080/api"
+const backendDomain = `${import.meta.env.VITE_BASE_URL}/api`
 const header = {
         "Content-Type" : "application/json",
         "Accept" : "application/json"
