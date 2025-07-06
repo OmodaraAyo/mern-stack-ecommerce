@@ -1,5 +1,4 @@
 import React from "react";
-import Logo from "./logo";
 import { CgSearch } from "react-icons/cg";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { BsCart3 } from "react-icons/bs";
