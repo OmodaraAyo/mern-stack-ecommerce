@@ -102,5 +102,7 @@ const SummaryApi = {
     }
 
 }
-
+/**
+ * Exporting SummaryApi object which contains all the API endpoint details
+ */
 export default SummaryApi;
