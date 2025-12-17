@@ -54,4 +54,7 @@ const AdminPanel = () => {
   );
 };
 
+/**
+ * Exporting AdminPanel component
+ */
 export default AdminPanel;
